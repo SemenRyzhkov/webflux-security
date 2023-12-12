@@ -4,7 +4,7 @@ plugins {
 	id 'io.spring.dependency-management' version "$springDependencyManagementVersion"
 }
 
-group = 'net.proselyte'
+group = 'ru.ryzhkov'
 version = '1.0.0'
 sourceCompatibility = '17'
 
@@ -33,6 +33,9 @@ dependencies {
 	compileOnly('org.projectlombok:lombok')
 	annotationProcessor "org.projectlombok:lombok"
 	annotationProcessor "org.mapstruct:mapstruct-processor:$mapStructVersion"
+	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-docker-compose
+	implementation "org.springframework.boot:spring-boot-docker-compose:$springBootComposeVersion"
+
 
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
