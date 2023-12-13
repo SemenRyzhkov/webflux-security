@@ -3,6 +3,7 @@ package ru.ryzhkov.webfluxsecurity.security;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import ru.ryzhkov.webfluxsecurity.security.properties.PasswordEncoderProperties;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
@@ -13,7 +14,7 @@ import java.util.Base64;
 @Component
 @RequiredArgsConstructor
 public class PBFDK2Encoder implements PasswordEncoder {
-    private final JWTProperties properties;
+    private final PasswordEncoderProperties properties;
 
     private final static String SECRET_KEY_INSTANCE = "PBKDF2WithHmacSHA512";
 
