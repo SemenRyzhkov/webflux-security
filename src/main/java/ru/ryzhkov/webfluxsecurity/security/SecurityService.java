@@ -45,6 +45,7 @@ public class SecurityService {
             Date expirationDate, Map<String, Object> claims, String subject
     ) {
         Date createdAt = new Date();
+        String base64EncodedSecretKey = Base64.getEncoder().encodeToString(properties.getSecret().getBytes());
         String token = Jwts.builder()
                 .setClaims(claims)
                 .setIssuer(properties.getIssuer())
@@ -52,7 +53,7 @@ public class SecurityService {
                 .setIssuedAt(createdAt)
                 .setId(UUID.randomUUID().toString())
                 .setExpiration(expirationDate)
-                .signWith(SignatureAlgorithm.HS256, Base64.getEncoder().encodeToString(properties.getSecret().getBytes()))
+                .signWith(SignatureAlgorithm.HS256, base64EncodedSecretKey)
                 .compact();
 
         return TokenDetails.builder()
