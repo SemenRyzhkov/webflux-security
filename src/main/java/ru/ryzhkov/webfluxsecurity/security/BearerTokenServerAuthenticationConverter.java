@@ -11,7 +11,6 @@ import reactor.core.publisher.Mono;
 import java.util.function.Function;
 
 @RequiredArgsConstructor
-@Component
 public class BearerTokenServerAuthenticationConverter implements ServerAuthenticationConverter {
     private final JWTHandler jwtHandler;
     private static final String BEARER_PREFIX = "Bearer ";

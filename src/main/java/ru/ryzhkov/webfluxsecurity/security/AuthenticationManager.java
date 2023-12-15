@@ -7,17 +7,17 @@ import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 import ru.ryzhkov.webfluxsecurity.entity.UserEntity;
 import ru.ryzhkov.webfluxsecurity.exception.UnauthorizedException;
-import ru.ryzhkov.webfluxsecurity.repositiry.UserRepository;
+import ru.ryzhkov.webfluxsecurity.service.UserService;
 
 @Component
 @RequiredArgsConstructor
 public class AuthenticationManager implements ReactiveAuthenticationManager {
-    private final UserRepository userRepository;
+    private final UserService userService;
 
     @Override
     public Mono<Authentication> authenticate(Authentication authentication) {
         CustomPrincipal principal = (CustomPrincipal) authentication.getPrincipal();
-        return userRepository.findById(principal.getId())
+        return userService.getUserById(principal.getId())
                 .filter(UserEntity::isEnabled)
                 .switchIfEmpty(Mono.error(new UnauthorizedException("User disabled")))
                 .map(user -> authentication);

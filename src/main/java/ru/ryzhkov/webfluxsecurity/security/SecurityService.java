@@ -11,6 +11,7 @@ import ru.ryzhkov.webfluxsecurity.entity.UserEntity;
 import ru.ryzhkov.webfluxsecurity.exception.AuthException;
 import ru.ryzhkov.webfluxsecurity.repositiry.UserRepository;
 import ru.ryzhkov.webfluxsecurity.security.properties.JWTProperties;
+import ru.ryzhkov.webfluxsecurity.service.UserService;
 
 import java.util.Base64;
 import java.util.Date;
@@ -21,7 +22,7 @@ import java.util.UUID;
 @Component
 @RequiredArgsConstructor
 public class SecurityService {
-    private final UserRepository userRepository;
+    private final UserService userService;
     private final PasswordEncoder passwordEncoder;
 
     private final JWTProperties properties;
@@ -65,7 +66,7 @@ public class SecurityService {
     }
 
     public Mono<TokenDetails> authenticate(String username, String password) {
-        return userRepository.findByUsername(username)
+        return userService.getUserByUsername(username)
                 .flatMap(user -> {
                     if (!user.isEnabled()) {
                         return Mono.error(new AuthException("Account disabled", "ACCOUNT_DISABLED"));
